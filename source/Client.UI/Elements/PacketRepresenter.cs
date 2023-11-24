@@ -18,15 +18,18 @@ public class PacketRepresenter : Border
             packet.SourceEndPoint, 
             packet.DestinationEndPoint, 
             packet.ProtocolType,
-            packet.TotalLength);
+            packet.TotalLength,
+            packet.TimeToLive,
+            packet.Version);
     }
 
-    private Grid CreateBorderComponentsGrid(EndPoint source, EndPoint destination, ProtocolType protocolType, ushort length)
+    private Grid CreateBorderComponentsGrid(EndPoint source, EndPoint destination, ProtocolType protocolType, ushort length, byte ttl, ProtocolVersion protocolVersion)
     {
         var grid = new Grid();
 
         grid.Children.Add(CreateAddressesComponentBorder(source, destination));
         grid.Children.Add(CreateInformationComponentBorder(protocolType, length));
+        grid.Children.Add(CreateCompositionComponentBorder(ttl, protocolVersion));
 
         return grid;
     }
@@ -59,19 +62,19 @@ public class PacketRepresenter : Border
             VerticalAlignment = VerticalAlignment.Top,
             HorizontalAlignment = HorizontalAlignment.Left,
             Foreground = Brushes.White,
-            FontFamily = new FontFamily("Bahnschrift Light"),
+            FontFamily = new FontFamily("Bahnschrift"),
             Margin = new Thickness(20, 0, 0, 0),
             FontSize = 12
         };
 
         var destinationAddressTextBlock = new TextBlock()
         {
-            Text = source.ToString(),
+            Text = destination.ToString(),
             VerticalAlignment = VerticalAlignment.Bottom,
             HorizontalAlignment = HorizontalAlignment.Left,
             Foreground = Brushes.White,
-            FontFamily = new FontFamily("Bahnschrift Light"),
-            Margin = new Thickness(20, 0, 0, 0),
+            FontFamily = new FontFamily("Bahnschrift"),
+            Margin = new Thickness(20, 0, 0, -2),
             FontSize = 12
         };
 
@@ -130,7 +133,7 @@ public class PacketRepresenter : Border
 
         var lengthTextBlock = new TextBlock()
         {
-            Text = protocolType.ToString(),
+            Text = length.ToString(),
             VerticalAlignment = VerticalAlignment.Bottom,
             HorizontalAlignment = HorizontalAlignment.Left,
             Foreground = Brushes.White,
@@ -157,11 +160,50 @@ public class PacketRepresenter : Border
 
         return border;
     }
-    private Border CreateCompositionComponentBorder(ushort totalLength, byte HeaderLength)
+    private Border CreateCompositionComponentBorder(byte ttl, ProtocolVersion protocolVersion)
     {
-        var textBlock = new TextBlock()
+        var ttlTitleTextBlock = new TextBlock()
         {
-            
+            Text = "TTL",
+            FontFamily = new FontFamily("Cascadia Code"),
+            Foreground = Brushes.White,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            Width = 75,
+            TextAlignment = TextAlignment.Center,
+        };
+        var ttlValueTextBlock = new TextBlock()
+        {
+            Text = ttl.ToString(),
+            FontFamily = new FontFamily("Cascadia Code"),
+            Foreground = Brushes.White,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            Width = 75,
+            TextAlignment = TextAlignment.Center,
+        };
+
+        var verTitleTextBlock = new TextBlock()
+        {
+            Text = "VER",
+            FontFamily = new FontFamily("Cascadia Code"),
+            Foreground = Brushes.White,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            Width = 75,
+            TextAlignment = TextAlignment.Center,
+        };
+        var verValueTextBlock = new TextBlock()
+        {
+            Text = protocolVersion.ToString(),
+            FontFamily = new FontFamily("Cascadia Code"),
+            Foreground = Brushes.White,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            Width = 75,
+            TextAlignment = TextAlignment.Center,
+        };
+
+        var gridSplitter = new GridSplitter()
+        {
+            BorderBrush = new SolidColorBrush(Color.FromRgb(101, 110, 144)),
+            BorderThickness = new Thickness(0.5)
         };
 
         var grid = new Grid()
@@ -177,12 +219,28 @@ public class PacketRepresenter : Border
                 new RowDefinition() { Height = new GridLength(5) },
                 new RowDefinition() { Height = GridLength.Auto },
                 new RowDefinition() { Height = new GridLength(2) }
-            },
+            }
         };
+
+        Grid.SetColumn(ttlTitleTextBlock, 0);
+        Grid.SetColumn(ttlValueTextBlock, 0);
+        Grid.SetColumn(verTitleTextBlock, 1);
+        Grid.SetColumn(verValueTextBlock, 1);
+        Grid.SetRow(ttlValueTextBlock, 2);
+        Grid.SetRow(verValueTextBlock, 2);
+        Grid.SetRowSpan(gridSplitter, 3);
+
+        grid.Children.Add(gridSplitter);
+        grid.Children.Add(ttlTitleTextBlock);
+        grid.Children.Add(verTitleTextBlock);
+        grid.Children.Add(ttlValueTextBlock);
+        grid.Children.Add(verValueTextBlock);
+
 
         var border = new Border()
         {
-            Margin = new Thickness(280, 8, 10, 8),
+            Margin = new Thickness(260, 8, 10, 8),
+            Width = 150,
             HorizontalAlignment = HorizontalAlignment.Stretch,
             Child = grid
         };

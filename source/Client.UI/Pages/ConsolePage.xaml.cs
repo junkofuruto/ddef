@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Client.Core.Monitoring;
+using Client.UI.Elements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,17 @@ namespace Client.UI.Pages
         private ConsolePage()
         {
             InitializeComponent();
+
+            MonitoringServer.PacketHandler += AddPacket;
+        }
+
+        private async void AddPacket(Core.Monitoring.Utilities.AnalyzerEventArgs e)
+        {
+            await Dispatcher.InvokeAsync(() =>
+            {
+                if (PacketsStackPanel.Children.Count > 9) PacketsStackPanel.Children.RemoveAt(0);
+                PacketsStackPanel.Children.Add(new PacketRepresenter(e.Packet));
+            });
         }
 
         public static ConsolePage Instance

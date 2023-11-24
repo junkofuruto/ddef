@@ -36,55 +36,9 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <ScrollViewer Style="{StaticResource CustomScrollbarStyle}">
-                    <StackPanel Grid.Row="0" Margin="0 0 10 0" CanVerticallyScroll="True">
-                        <Border Height="50" CornerRadius="5" Background="#41518f" Margin="0 0 0 5">
-                            <Grid>
-                                <Border Margin="10 8" HorizontalAlignment="Left" Width="150" BorderBrush="#FF656E90" BorderThickness="0 0 1 0">
-                                    <Grid>
-                                        <fa:IconImage Icon="ArrowLeft" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" 
-                                                      Height="10" Margin="2"/>
-                                        <TextBlock Text="192.168.100.100:9090" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" 
-                               FontFamily="Bahnschrift Light" Margin="20 0 0 0" FontSize="12"/>
-                                        <fa:IconImage Icon="ArrowRight" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="White" 
-                                  Height="10" Margin="2"/>
-                                        <TextBlock Text="192.168.100.100:9090" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="White"
-                               FontFamily="Bahnschrift Light" Margin="20 0 0 -2" FontSize="12"/>
-                                    </Grid>
-                                </Border>
-                                <Border Margin="180 8 10 8" HorizontalAlignment="Left" Width="75" BorderBrush="#FF656E90" BorderThickness="0 0 1 0">
-                                    <Grid >
-                                        <fa:IconImage Icon="Globe" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Height="10" Margin="2"/>
-                                        <fa:IconImage Icon="Ruler" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="White" Height="10" Margin="2"/>
-
-                                        <TextBlock Text="TCP" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontFamily="Cascadia Code" Margin="20 0 0 0" FontSize="12"/>
-                                        <TextBlock Text="4096" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="White" FontFamily="Bahnschrift Light" Margin="20 0 0 -1" FontSize="12"/>
-                                    </Grid>
-                                </Border>
-                                <Border Margin="260 8 10 8" HorizontalAlignment="Stretch">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="5"/>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="2"/>
-                                        </Grid.RowDefinitions>
-                                        <GridSplitter BorderBrush="#FF656E90" Grid.RowSpan="3" BorderThickness="0.5"/>
-                                        <TextBlock Grid.Column="0" Text="TTL" FontFamily="Cascadia Code" Foreground="White" HorizontalAlignment="Center"/>
-                                        <TextBlock Grid.Column="1" Text="VER" FontFamily="Cascadia Code" Foreground="White" HorizontalAlignment="Center"/>
-                                        
-                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="128" FontFamily="Cascadia Code" Foreground="White" HorizontalAlignment="Center"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="2" Text="IPv4" FontFamily="Cascadia Code" Foreground="White" HorizontalAlignment="Center"/>
-                                    </Grid>
-                                </Border>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </ScrollViewer>
+                <Grid>
+                    <StackPanel x:Name="PacketsStackPanel" Grid.Row="0" CanVerticallyScroll="True" Orientation="Vertical"/>
+                </Grid>
             </Grid>
         </Border>
         <Border Grid.Column="3" Grid.Row="3" CornerRadius="10">
@@ -94,6 +48,23 @@
                     <GradientStop Color="#FF22125F" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
+            <Grid Margin="10">
+                <StackPanel x:Name="IssuesStackPanel">
+                    <Border Background="#FF3D518F" CornerRadius="5">
+                        <Grid Margin="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="17:45:00" Foreground="#FFA4AFD0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 3 5 0" FontFamily="Cascadia Code"/>
+                            <TextBlock Grid.Row="0" Text="192.168.100.100" Foreground="#FFA4AFD0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="23 3 0 0" FontFamily="Cascadia Code"/>
+                            <TextBlock Grid.Row="1" Text="HARVESTER: Keylogger host" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Top" 
+                                       HorizontalAlignment="Left" Margin="5 3 5 8" FontFamily="Cascadia Code" TextAlignment="Justify"/>
+                            <fa:IconImage Icon="Globe" HorizontalAlignment="Left" VerticalAlignment="Center" Height="12" Foreground="#FFA4AFD0" Margin="5 3 5 0"/>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </Page>

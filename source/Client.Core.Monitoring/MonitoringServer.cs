@@ -12,7 +12,7 @@ public static class MonitoringServer
     private static Logger logger = new Logger("Monitoring.MonitoringServer");
     private static readonly byte[] optionInValue = { 1, 0, 0, 0 };
 
-    public static event AnalyzerEventHandler? OnPacketIncoming;
+    public static event AnalyzerEventHandler? PacketHandler;
     public static NetworkConfiguration? NetworkConfiguration { get; private set; }
 
     public async static Task Start(string networkName, CancellationToken cancellationToken)
@@ -39,7 +39,7 @@ public static class MonitoringServer
                 socket.Receive(buffer, buffer.Length, SocketFlags.None);
                 var packet = Packet.Parse(buffer);
                 packet.Log();
-                if (OnPacketIncoming != null && packet != null) OnPacketIncoming.Invoke(new AnalyzerEventArgs
+                if (PacketHandler != null && packet != null) PacketHandler.Invoke(new AnalyzerEventArgs
                 {
                     Packet = Packet.Parse(buffer)
                 });

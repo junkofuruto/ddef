@@ -1,5 +1,8 @@
-﻿using Client.Core.Monitoring;
+﻿using Client.Core.Analyzing.Address;
+using Client.Core.Analyzing.Application;
+using Client.Core.Monitoring;
 using Client.UI.Elements;
+using FontAwesome.Sharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,14 +29,34 @@ namespace Client.UI.Pages
             InitializeComponent();
 
             MonitoringServer.PacketHandler += AddPacket;
+            AddressAnalyzer.OnBadAddress += AddAddressIssue;
+            ApplicationAnalyzer.OnBadApplication += AddApplicationIssue;
+        }
+
+        private async void AddApplicationIssue(BadApplicationEventArgs e)
+        {
+            await Dispatcher.InvokeAsync(() =>
+            {
+                IssuesStackPanel.Children.Add(new IssueRepresenter(IconChar.MobileAlt, e.Application, e.Reason, e.Message));
+                if (IssuesStackPanel.Children.Count > 8) IssuesStackPanel.Children.RemoveAt(0);
+            });
+        }
+
+        private async void AddAddressIssue(BadAddressEventArgs e)
+        {
+            await Dispatcher.InvokeAsync(() =>
+            {
+                IssuesStackPanel.Children.Add(new IssueRepresenter(IconChar.Globe, e.Address!.ToString(), e.Reason.ToString(), e.Message));
+                if (IssuesStackPanel.Children.Count > 8) IssuesStackPanel.Children.RemoveAt(0);
+            });
         }
 
         private async void AddPacket(Core.Monitoring.Utilities.AnalyzerEventArgs e)
         {
             await Dispatcher.InvokeAsync(() =>
             {
-                if (PacketsStackPanel.Children.Count > 9) PacketsStackPanel.Children.RemoveAt(0);
                 PacketsStackPanel.Children.Add(new PacketRepresenter(e.Packet));
+                if (PacketsStackPanel.Children.Count > 9) PacketsStackPanel.Children.RemoveAt(0);
             });
         }
 

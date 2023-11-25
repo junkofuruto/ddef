@@ -49,34 +49,18 @@
                 </LinearGradientBrush>
             </Border.Background>
             <Grid Margin="10">
-                <StackPanel x:Name="IssuesStackPanel">
-                    <Border Background="#FF3D518F" CornerRadius="5" Margin="0 0 0 5">
-                        <Grid Margin="3">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="20"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="17:45:00" Foreground="#FFA4AFD0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 3 5 0" FontFamily="Cascadia Code"/>
-                            <TextBlock Grid.Row="0" Text="192.168.100.100" Foreground="#FFA4AFD0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="23 3 0 0" FontFamily="Cascadia Code"/>
-                            <TextBlock Grid.Row="1" Text="HARVESTER: Keylogger host" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Top" 
-                                       HorizontalAlignment="Left" Margin="5 3 5 8" FontFamily="Cascadia Code" TextAlignment="Justify"/>
-                            <fa:IconImage Icon="Globe" HorizontalAlignment="Left" VerticalAlignment="Center" Height="12" Foreground="#FFA4AFD0" Margin="5 3 5 0"/>
-                        </Grid>
-                    </Border>
-                    <Border Background="#FF3D518F" CornerRadius="5">
-                        <Grid Margin="3">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="20"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="17:45:01" Foreground="#FFA4AFD0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 3 5 0" FontFamily="Cascadia Code"/>
-                            <TextBlock Grid.Row="0" Text="Steam" Foreground="#FFA4AFD0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="23 3 0 0" FontFamily="Cascadia Code"/>
-                            <TextBlock Grid.Row="1" Text="REASON: Description" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Top" 
-                                       HorizontalAlignment="Left" Margin="5 3 5 8" FontFamily="Cascadia Code" TextAlignment="Justify"/>
-                            <fa:IconImage Grid.Row="0" Icon="MobileAlt" HorizontalAlignment="Left" VerticalAlignment="Center" Height="12" Foreground="#FFA4AFD0" Margin="7 3 5 0"/>
-                        </Grid>
-                    </Border>
-                </StackPanel>
+                <fa:IconImage Icon="Circle" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Height="20">
+                    <fa:IconImage.Foreground>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#7F7CF1" Offset="0"/>
+                            <GradientStop Color="#D3B7FF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </fa:IconImage.Foreground>
+                </fa:IconImage>
+                <TextBlock Text="ISSUES" Foreground="White" FontFamily="Cascadia Code" FontSize="15" VerticalAlignment="Top" Margin="35 5 0 0"/>
+                <TextBlock Text="NOTHING IS HERE... GREAT! :)" Foreground="#FFA4AFD0" FontFamily="Cascadia Code" Width="200" TextWrapping="Wrap" 
+                           FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 60 0 0" TextAlignment="Center"/>
+                <StackPanel x:Name="IssuesStackPanel" Margin="0 55 0 0"/>
             </Grid>
         </Border>
     </Grid>

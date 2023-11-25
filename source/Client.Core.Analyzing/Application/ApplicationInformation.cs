@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Client.Core.Analyzing.Application;
 
-public class ApplicationInformation
+internal class ApplicationInformation
 {
     public int Id { get; set; }
     public HashSet<int> ProcessPorts { get; set; } = null!;

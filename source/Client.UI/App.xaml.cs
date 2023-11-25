@@ -1,5 +1,6 @@
 ﻿using Client.Core.Analyzing.Address;
 using Client.Core.Analyzing.Application;
+using Client.Core.Logging;
 using Client.Core.Monitoring;
 using Client.Core.Monitoring.Utilities;
 using Client.UI.Statistics;
@@ -19,6 +20,8 @@ namespace Client.UI
         public static void Configure()
         {
             NetworkInterfaces = NetworkConfiguration.GetAllInterfaces();
+            AddressAnalyzer.Configure();
+            ApplicationAnalyzer.Configure();
             StatisticsCollector.Configure();
 
             MonitoringServer.PacketHandler += ApplicationAnalyzer.Handler;

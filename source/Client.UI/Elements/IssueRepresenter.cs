@@ -1,13 +1,8 @@
-﻿using FontAwesome.Sharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using static System.Net.Mime.MediaTypeNames;
+using FontAwesome.Sharp;
 
 namespace Client.UI.Elements;
 
@@ -17,6 +12,8 @@ public class IssueRepresenter : Border
     {
         Background = new SolidColorBrush(Color.FromRgb(61, 81, 143));
         CornerRadius = new CornerRadius(5);
+        MinHeight = 50;
+        Margin = new Thickness(0, 0, 0, 5);
         Child = CreateIssueGrid(issuer, reason, description, icon);
     }
 
@@ -49,7 +46,7 @@ public class IssueRepresenter : Border
             Foreground = Brushes.White,
             VerticalAlignment = VerticalAlignment.Top,
             HorizontalAlignment = HorizontalAlignment.Left,
-            Margin = new Thickness(5, 3, 5, 8),
+            Margin = new Thickness(5, 3, 5, 0),
             FontFamily = new FontFamily("Cascadia Code")
         };
 
@@ -68,7 +65,7 @@ public class IssueRepresenter : Border
             Margin = new Thickness(3),
             RowDefinitions =
             {
-                new RowDefinition() { Height = new GridLength(2, GridUnitType.Pixel) },
+                new RowDefinition() { Height = new GridLength(20, GridUnitType.Pixel) },
                 new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) },
             }
         };

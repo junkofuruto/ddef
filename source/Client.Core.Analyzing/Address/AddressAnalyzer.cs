@@ -10,6 +10,11 @@ public static class AddressAnalyzer
 
     public static event BadAddressEventHandler? OnBadAddress;
 
+    public static void Configure()
+    {
+        AddressServerDataService.StartUpdateSchedule();
+    }
+
     public async static void Handler(AnalyzerEventArgs e)
     {
         await CheckPacketAdresses(e.Packet);
@@ -17,18 +22,26 @@ public static class AddressAnalyzer
 
     private async static Task CheckPacketAdresses(Packet packet)
     {
-        bool isBadDestinationAddress = AddressServerDataService.Find(packet.DestinationEndPoint!.Address);
-        bool isBadSourceAddress = AddressServerDataService.Find(packet.SourceEndPoint!.Address);
+        await CheckPacketSourceAddress(packet);
+        await CheckPacketDestinationAddress(packet);
+    }
 
-        if (isBadDestinationAddress || isBadSourceAddress)
+    private async static Task CheckPacketSourceAddress(Packet packet)
+    {
+        var result = await AddressServerDataService.Find(packet.SourceEndPoint!.Address);
+        if (result != null && OnBadAddress != null)
         {
-            var result = await AddressServerDataService.GetAddressInformation(isBadDestinationAddress ? packet.DestinationEndPoint!.Address : packet.SourceEndPoint!.Address);
-            OnBadAddress?.Invoke(new BadAddressEventArgs
-            {
-                Address = isBadDestinationAddress ? packet.DestinationEndPoint!.Address : packet.SourceEndPoint!.Address,
-                Source = isBadDestinationAddress ? BadAddressSource.Into : BadAddressSource.From,
-                Reason = BadAddressReason.Unknown
-            });
+            logger.Warning("Found bad address");
+            OnBadAddress.Invoke(result);
+        }
+    }
+    private async static Task CheckPacketDestinationAddress(Packet packet)
+    {
+        var result = await AddressServerDataService.Find(packet.DestinationEndPoint!.Address);
+        if (result != null && OnBadAddress != null)
+        {
+            logger.Warning("Found bad address");
+            OnBadAddress.Invoke(result);
         }
     }
 }

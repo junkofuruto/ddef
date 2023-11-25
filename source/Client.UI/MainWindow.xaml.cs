@@ -1,4 +1,5 @@
-﻿using Client.Core.Monitoring;
+﻿using Client.Core.Logging;
+using Client.Core.Monitoring;
 using Client.Core.Monitoring.Utilities;
 using Client.UI.Pages;
 using System;
@@ -20,8 +21,6 @@ namespace Client.UI
 {
     public partial class MainWindow : Window
     {
-        
-
         public MainWindow()
         {
             App.Configure();

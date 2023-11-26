@@ -3,75 +3,119 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:local="clr-namespace:Client.UI"
-             StartupUri="MainWindow.xaml">
+             StartupUri="AuthWindow.xaml">
     <Application.Resources>
-        <Style x:Key="CustomScrollbarStyle" TargetType="ScrollViewer">
+        <Style x:Key="FlatTextBox" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Cascadia Mono"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF22125F"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ScrollViewer">
+                    <ControlTemplate TargetType="TextBox">
                         <Grid>
-                            <ScrollContentPresenter />
-                            <ScrollBar x:Name="PART_VerticalScrollBar"
-                                       Orientation="Vertical"
-                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}">
-                                <ScrollBar.Style>
-                                    <Style TargetType="ScrollBar">
-                                        <Setter Property="HorizontalAlignment" Value="Right"/>
-                                        <Setter Property="Background" Value="Transparent" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ScrollBar">
-                                                    <Grid>
-                                                        <Border Background="#41518f"
-                                                                CornerRadius="5"
-                                                                Opacity="0.5"/>
-                                                        <Track x:Name="PART_Track"
-                                                               IsDirectionReversed="true">
-                                                            <Track.Thumb>
-                                                                <Thumb Background="#41518f"
-                                                                       BorderBrush="#41518f"
-                                                                       BorderThickness="1"/>
-                                                            </Track.Thumb>
-                                                        </Track>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ScrollBar.Style>
-                            </ScrollBar>
-                            <ScrollBar x:Name="PART_HorizontalScrollBar"
-                                       Orientation="Horizontal"
-                                       Width="10"
-                                       Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}">
-                                <ScrollBar.Style>
-                                    <Style TargetType="ScrollBar">
-                                        <Setter Property="Width" Value="10" />
-                                        <Setter Property="Background" Value="Transparent" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ScrollBar">
-                                                    <Grid>
-                                                        <Border Background="#41518f"
-                                                                CornerRadius="5"
-                                                                Opacity="0.5"/>
-                                                        <Track x:Name="PART_Track" Width="10"/>
-                                                        <Thumb Background="#41518f"
-                                                               BorderBrush="#41518f"
-                                                               BorderThickness="1"/>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ScrollBar.Style>
-                            </ScrollBar>
+                            <Border x:Name="border"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="2">
+                                <ScrollViewer x:Name="PART_ContentHost"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FF22125F"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="FlatPasswordBox" TargetType="PasswordBox">
+            <Setter Property="FontFamily" Value="Cascadia Mono"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF22125F"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Grid>
+                            <Border x:Name="border"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="2">
+                                <ScrollViewer x:Name="PART_ContentHost"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FF22125F"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="FlatButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Cascadia Mono"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF22125F"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="2">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush>
+                                <GradientStop Color="#7F7CF1" Offset="0"/>
+                                <GradientStop Color="#D3B7FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="InvisibleButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Cascadia Mono"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border
+                 BorderBrush="{TemplateBinding BorderBrush}"
+                 Background="{TemplateBinding Background}"
+                 BorderThickness="{TemplateBinding BorderThickness}"
+                 CornerRadius="2">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
+        
         <Style x:Key="RoundCheckBoxStyle" TargetType="CheckBox">
             <Setter Property="Template">
                 <Setter.Value>

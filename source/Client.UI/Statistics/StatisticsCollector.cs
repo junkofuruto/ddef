@@ -32,14 +32,17 @@ public static class StatisticsCollector
 
     private async static void ReportSendingSchedule()
     {
-        await Task.Delay(TimeSpan.FromMinutes(5));
+        while (true)
+        {
+            await Task.Delay(TimeSpan.FromMinutes(5));
 
-        var packets = PacketsRecieved.Where(x => x.Timestamp > DateTime.Now.AddMinutes(-5)).Select(x => x.Value).Sum();
-        var addresses = BadAddressCauses.Where(x => x.Timestamp > DateTime.Now.AddMinutes(-5)).Select(x => x.Value).Sum();
-        var apps = BadApplicationsCauses.Where(x => x.Timestamp > DateTime.Now.AddMinutes(-5)).Select(x => x.Value).Sum();
+            var packets = PacketsRecieved.Where(x => x.Timestamp > DateTime.Now.AddMinutes(-5)).Select(x => x.Value).Sum();
+            var addresses = BadAddressCauses.Where(x => x.Timestamp > DateTime.Now.AddMinutes(-5)).Select(x => x.Value).Sum();
+            var apps = BadApplicationsCauses.Where(x => x.Timestamp > DateTime.Now.AddMinutes(-5)).Select(x => x.Value).Sum();
 
-        if (User.Current != null)
-            await User.Current.ReportAsync(packets, addresses, apps);
+            if (User.Current != null)
+                await User.Current.ReportAsync(packets, addresses, apps);
+        }
     }
 
     private async static void StatisticsTimeskipSchedule()

@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using System.Security.Authentication;
 
 namespace Client.Core.Analyzing.DataAccess.Entities;
 
@@ -26,7 +27,7 @@ public class User
 
         await reader.ReadAsync();
 
-        if (reader.FieldCount == 1) throw new Exception(reader.GetString(0));
+        if (reader.FieldCount == 1) throw new AuthenticationException(reader.GetString(0));
 
         user.Id = reader.GetInt64(0);
         user.Token = reader.GetString(2);
@@ -61,7 +62,7 @@ public class User
 
         await reader.ReadAsync();
 
-        if (reader.GetName(0) == "message") throw new Exception(reader.GetString(0));
+        if (reader.GetName(0) == "message") throw new AuthenticationException(reader.GetString(0));
         user.Id = reader.GetInt64(0);
         user.Token = reader.GetString(2);
         user.Username = reader.GetString(3);

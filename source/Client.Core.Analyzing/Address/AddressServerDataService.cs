@@ -1,4 +1,5 @@
-﻿using Client.Core.Logging;
+﻿using Client.Core.Analyzing.DataAccess.Entities;
+using Client.Core.Logging;
 using System.Net;
 
 namespace Client.Core.Analyzing.Address;
@@ -25,14 +26,12 @@ internal static class AddressServerDataService
     {
         logger.Info("Collecting IPs database from server...");
 
-        badAddressesInfo.Clear();
-
-        badAddressesInfo.Add(new BadAddressEventArgs()
+        badAddressesInfo = (await BadAddress.GetAllAsync(User.Current)).Select(x => new BadAddressEventArgs
         {
-            Address = IPAddress.Parse("149.154.167.223"),
-            Reason = "spammer",
-            Message = "can be ignored"
-        });
+            Address = IPAddress.Parse(x.Host),
+            Reason = x.Reason,
+            Message = x.Message
+        }).ToHashSet();
 
         await Task.Delay(TimeSpan.FromMinutes(5));
     }

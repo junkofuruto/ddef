@@ -1,0 +1,24 @@
+﻿<Page x:Class="Client.UI.Pages.Auth.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Client.UI.Pages.Auth"
+      mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="600">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="200" Width="330">
+            <Grid Margin="0 40 0 10">
+                <TextBlock Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Cascadia Mono">USERNAME</TextBlock>
+                <TextBox  x:Name="UsernameTextBox" Style="{StaticResource FlatTextBox}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="65 0 0 0" Text="johnsmith1388"/>
+            </Grid>
+            <Grid Margin="0 0 0 20">
+                <TextBlock Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Cascadia Mono">PASSWORD</TextBlock>
+                <PasswordBox x:Name="PasswordTextBox" Style="{StaticResource FlatPasswordBox}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="65 0 0 0" Password="12345"/>
+            </Grid>
+            <TextBlock x:Name="LoginMessageTextBlock" Visibility="Hidden" Margin="0 0 0 10" Foreground="Red" VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" FontFamily="Cascadia Mono">INVALID PASSWORD OR LOGIN</TextBlock>
+            <Button Style="{StaticResource FlatButton}" Height="32" Content="Login" Margin="0 0 0 5" Click="LoginClick"/>
+            <Button Style="{StaticResource InvisibleButton}" Height="32" Content="No account? Create one!" Foreground="#D3B7FF" Click="LocateRegisterPageClick"/>
+        </StackPanel>
+    </Grid>
+</Page>

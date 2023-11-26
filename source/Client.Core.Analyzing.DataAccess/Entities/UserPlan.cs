@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 
 namespace Client.Core.Analyzing.DataAccess.Entities;
 
@@ -69,5 +63,28 @@ public sealed class UserPlan
         }
 
         connection.Close();
+    }
+
+    public async Task<bool> UpdateUserPlanAsync(User user)
+    {
+        if (user == null) return false;
+
+        var connection = new SqlConnection(Connection.ConnectionString);
+        var command = connection.CreateCommand();
+        command.CommandText = @"EXEC dbo.ddef_modify_user_plan @user_id, @token, @plan_id";
+        command.Parameters.AddWithValue("user_id", user.Id);
+        command.Parameters.AddWithValue("token", user.Token);
+        command.Parameters.AddWithValue("plan_id", Id);
+        connection.Open();
+
+        var reader = command.ExecuteReader();
+        reader.Read();
+
+        if (reader.HasRows) return false;
+
+        await reader.CloseAsync();
+        await connection.CloseAsync();
+
+        return true;
     }
 }

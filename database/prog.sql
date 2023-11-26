@@ -138,6 +138,18 @@ AS BEGIN
 	SELECT [username], [f_name], [l_name] FROM dbo.ddef_user WHERE [id] = @user_id
 END;
 
+ALTER PROC dbo.ddef_modify_user_plan
+(
+	@user_id BIGINT,
+	@token VARCHAR(100),
+	@plan_id TINYINT
+)
+AS BEGIN
+	DECLARE @user_exists BIT;
+	EXEC dbo.ddef_confirm_identity @user_id, @token, @user_exists OUTPUT;
+	IF (@user_exists = 0) BEGIN SELECT 'Unable to identify user' AS [message] RETURN END;
+	UPDATE dbo.ddef_user_plan SET [plan_id] = @plan_id, [expiration_date] = DATEADD(MONTH, 1, GETDATE()) WHERE [user_id] = @user_id
+END;
 
 EXEC dbo.ddef_login 'johnsmith1388', '12345';
 EXEC dbo.ddef_modify_user 3, 'dWDHshbat4LfUiDfee0BquEIlPQuh4AMDQO0vaRbRFb9Hjv1RWwr8vq6qwW1wqznWpG5k9AyzefLEXo1ISBvqjxnV2cDPEkpK1yz', NULL, NULL, NULL;

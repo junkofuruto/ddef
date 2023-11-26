@@ -6,6 +6,8 @@ public class BadApplicationEventArgs
     public string Reason { get; set; }
     public string? Message { get; set; }
 
+    public BadApplicationEventArgs() { }
+
     public BadApplicationEventArgs(string application, string reason)
     {
         Application = application;

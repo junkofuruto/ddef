@@ -6,7 +6,7 @@ namespace Client.Core.Analyzing.Application;
 internal static class BadApplicationDataSerivce
 {
     private static Logger logger = new Logger("Analyzing.Address.BadApplicationDataSerivce");
-    private static List<BadApplicationEventArgs> badApplicationsInfo  = new List<BadApplicationEventArgs>();
+    private static HashSet<BadApplicationEventArgs> badApplicationsInfo  = new HashSet<BadApplicationEventArgs>();
 
     public async static Task<BadApplicationEventArgs?> Find(string app)
     {
@@ -21,8 +21,12 @@ internal static class BadApplicationDataSerivce
     public async static void StartUpdateSchedule()
     {
         logger.Info("Collecting bad applications database from server...");
-        var collectedData = await BadApplication.GetBadApplications(User.Current);
-        badApplicationsInfo.AddRange(collectedData.Select(x => new BadApplicationEventArgs(x.Name, x.Reason, x.Message)));
+        badApplicationsInfo = (await BadApplication.GetAllAsync(User.Current)).Select(x => new BadApplicationEventArgs
+        {
+            Application = x.Name,
+            Reason = x.Reason,
+            Message = x.Message
+        }).ToHashSet();
         await Task.Delay(TimeSpan.FromMinutes(5));
     }
 }

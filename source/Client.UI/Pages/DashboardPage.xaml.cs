@@ -1,4 +1,5 @@
-﻿using Client.UI.Statistics;
+﻿using Client.Core.Analyzing.DataAccess.Entities;
+using Client.UI.Statistics;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,8 +42,8 @@ namespace Client.UI.Pages
         {
             get
             {
-                if (instance == null)
-                    instance = new DashboardPage();
+                if (User.Current.Plan.DashboardAccess == false) throw new InvalidOperationException("You dont have access to this feature");
+                if (instance == null) instance = new DashboardPage();
                 return instance;
             }
         }

@@ -1,5 +1,6 @@
 ﻿using Client.Core.Analyzing.Address;
 using Client.Core.Analyzing.Application;
+using Client.Core.Analyzing.DataAccess.Entities;
 using Client.Core.Monitoring;
 using Client.UI.Elements;
 using FontAwesome.Sharp;
@@ -64,8 +65,8 @@ namespace Client.UI.Pages
         {
             get
             {
-                if (instance == null)
-                    instance = new ConsolePage();
+                if (User.Current.Plan.ConsoleAccess == false) throw new InvalidOperationException("You dont have access to this feature");
+                if (User.Current.Plan.ConsoleAccess && instance == null) instance = new ConsolePage();
                 return instance;
             }
         }

@@ -1,22 +1,12 @@
 ﻿using Client.Core.Analyzing.DataAccess.Entities;
-using Client.Core.Logging;
-using Client.Core.Monitoring;
 using Client.Core.Monitoring.Utilities;
 using Client.UI.Pages;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Threading.Tasks;
+using Microsoft.PowerShell.Commands;
 
 namespace Client.UI
 {
@@ -24,21 +14,60 @@ namespace Client.UI
     {
         public MainWindow()
         {
-            Task.Run(App.Configure);
-            App.StartMonitoringServer();
-
             InitializeComponent();
 
-            ProfileTextBlock.Text = $"{User.Current?.FirstName.ToCharArray().First()}{User.Current?.LastName.ToCharArray().First()}";
-            UsernameTextBlock.Text = $"@{User.Current?.Username}";
-            NameTextBlock.Text = $"{User.Current?.FirstName} {User.Current?.LastName}";
-
+            Task.Run(() => Configure("Ethernet 2")).Wait();
             App.Frame = MainWindowFrame;
-            App.Frame.Navigate(ConsolePage.Instance);
+            App.NetworkInterfaces = NetworkConfiguration.GetAllInterfaces();
         }
 
-        private void NavigateDashboardClick(object sender, RoutedEventArgs e) => App.Frame!.Navigate(DashboardPage.Instance);
-        private void NavigateConsoleClick(object sender, RoutedEventArgs e) => App.Frame!.Navigate(ConsolePage.Instance);
+        public static void UpdateData(MainWindow window)
+        {
+            window.ProfileTextBlock.Text = $"{User.Current?.FirstName.ToCharArray().First()}{User.Current?.LastName.ToCharArray().First()}";
+            window.UsernameTextBlock.Text = $"@{User.Current?.Username}";
+            window.NameTextBlock.Text = $"{User.Current?.FirstName} {User.Current?.LastName}";
+        }
+
+        private async void Configure(string adapterName)
+        {
+            await Dispatcher.InvokeAsync(async () =>
+            {
+                try
+                {
+                    await App.Configure();
+                    App.StartMonitoringServer(adapterName);
+                    UpdateData(this);
+                    App.Frame.Navigate(AccountPage.Instance);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            });
+        }
+
+        private void NavigateDashboardClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                App.Frame!.Navigate(DashboardPage.Instance);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void NavigateConsoleClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                App.Frame!.Navigate(ConsolePage.Instance);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void NavigateAccountClick(object sender, RoutedEventArgs e) => App.Frame!.Navigate(AccountPage.Instance);
         private async void ExitClick(object sender, RoutedEventArgs e)
         {
@@ -48,7 +77,10 @@ namespace Client.UI
 
         private void MainWindowsMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+            try
+            {
+                DragMove();
+            } catch { }
         }
         private void MainWindowsMouseMove(object sender, MouseEventArgs e)
         {
@@ -58,6 +90,11 @@ namespace Client.UI
                 Left = currentPosition.X + Left - Mouse.GetPosition(this).X;
                 Top = currentPosition.Y + Top - Mouse.GetPosition(this).Y;
             }
+        }
+
+        private void AdaptersComboBoxSelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

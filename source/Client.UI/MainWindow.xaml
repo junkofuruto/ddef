@@ -8,16 +8,11 @@
         WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="DDEF"
         MouseLeftButtonDown="MainWindowsMouseLeftButtonDown" MouseMove="MainWindowsMouseMove">
     <Grid>
-        <Grid x:Name="WindowGrid" IsEnabled="True">
-            <Grid.Effect>
-                <BlurEffect x:Name="WindowBlurEffect" Radius="0"/>
-            </Grid.Effect>
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-
             <Border CornerRadius="5 0 0 5" Grid.Row="1">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="3 0" EndPoint="0 1">
@@ -40,9 +35,9 @@
                                 </Grid>
                             </Border>
                         </Border>
-                        <TextBlock x:Name="NameTextBlock" Text="John Smith" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,2,0,0"
+                        <TextBlock x:Name="NameTextBlock" Text="--- --------" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,2,0,0"
                         FontSize="15" FontFamily="Cascadia Code" Foreground="White"/>
-                        <TextBlock x:Name="UsernameTextBlock" Text="@johnsmith1388" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,27,0,0"
+                        <TextBlock x:Name="UsernameTextBlock" Text="---------------" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,27,0,0"
                         FontSize="10" FontFamily="Cascadia Code" Foreground="#FF848096"/>
                     </Grid>
                     <Separator Height="0.8" Margin="20 80 20 30" VerticalAlignment="Top" Background="#46558A"/>
@@ -84,6 +79,5 @@
                 <Frame x:Name="MainWindowFrame" NavigationUIVisibility="Hidden"/>
             </Border>
         </Grid>
-
     </Grid>
 </Window>

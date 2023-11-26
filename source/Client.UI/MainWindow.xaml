@@ -8,9 +8,9 @@
         WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="DDEF"
         MouseLeftButtonDown="MainWindowsMouseLeftButtonDown" MouseMove="MainWindowsMouseMove">
     <Grid>
-        <Grid IsEnabled="True">
+        <Grid x:Name="WindowGrid" IsEnabled="True">
             <Grid.Effect>
-                <BlurEffect Radius="0"/>
+                <BlurEffect x:Name="WindowBlurEffect" Radius="0"/>
             </Grid.Effect>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
@@ -36,16 +36,13 @@
                                     </LinearGradientBrush>
                                 </Border.Background>
                                 <Grid>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="JS" Foreground="White"
-                                FontSize="22" FontFamily="Cascadia Code"/>
-
+                                    <TextBlock x:Name="ProfileTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center" Text="JS" Foreground="White" FontSize="22" FontFamily="Cascadia Code"/>
                                 </Grid>
-
                             </Border>
                         </Border>
-                        <TextBlock Text="John Smith" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,2,0,0"
+                        <TextBlock x:Name="NameTextBlock" Text="John Smith" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,2,0,0"
                         FontSize="15" FontFamily="Cascadia Code" Foreground="White"/>
-                        <TextBlock Text="@johnsmith1388" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,27,0,0"
+                        <TextBlock x:Name="UsernameTextBlock" Text="@johnsmith1388" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="55,27,0,0"
                         FontSize="10" FontFamily="Cascadia Code" Foreground="#FF848096"/>
                     </Grid>
                     <Separator Height="0.8" Margin="20 80 20 30" VerticalAlignment="Top" Background="#46558A"/>

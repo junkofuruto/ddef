@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Client.Core.Analyzing.DataAccess\Client.Core.Analyzing.DataAccess.csproj" />
     <ProjectReference Include="..\Client.Core.Monitoring\Client.Core.Monitoring.csproj" />
   </ItemGroup>
 

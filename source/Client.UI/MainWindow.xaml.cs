@@ -1,4 +1,5 @@
-﻿using Client.Core.Logging;
+﻿using Client.Core.Analyzing.DataAccess.Entities;
+using Client.Core.Logging;
 using Client.Core.Monitoring;
 using Client.Core.Monitoring.Utilities;
 using Client.UI.Pages;
@@ -23,10 +24,14 @@ namespace Client.UI
     {
         public MainWindow()
         {
-            App.Configure();
+            Task.Run(App.Configure);
             App.StartMonitoringServer();
 
             InitializeComponent();
+
+            ProfileTextBlock.Text = $"{User.Current?.FirstName.ToCharArray().First()}{User.Current?.LastName.ToCharArray().First()}";
+            UsernameTextBlock.Text = $"@{User.Current?.Username}";
+            NameTextBlock.Text = $"{User.Current?.FirstName} {User.Current?.LastName}";
 
             App.Frame = MainWindowFrame;
             App.Frame.Navigate(ConsolePage.Instance);
@@ -35,7 +40,11 @@ namespace Client.UI
         private void NavigateDashboardClick(object sender, RoutedEventArgs e) => App.Frame!.Navigate(DashboardPage.Instance);
         private void NavigateConsoleClick(object sender, RoutedEventArgs e) => App.Frame!.Navigate(ConsolePage.Instance);
         private void NavigateAccountClick(object sender, RoutedEventArgs e) => App.Frame!.Navigate(AccountPage.Instance);
-        private void ExitClick(object sender, RoutedEventArgs e) => Close();
+        private async void ExitClick(object sender, RoutedEventArgs e)
+        {
+            await User.Current?.DropTokenAsync();
+            Close();
+        }
 
         private void MainWindowsMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

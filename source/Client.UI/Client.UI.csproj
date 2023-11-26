@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
 	<DisableWinExeOutputInference>True</DisableWinExeOutputInference>
 	<NeutralLanguage>en</NeutralLanguage>
+	<ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Client.Core.Analyzing.Address;
 using Client.Core.Analyzing.Application;
+using Client.Core.Analyzing.DataAccess.Entities;
 using Client.Core.Monitoring;
 using Client.Core.Monitoring.Utilities;
 
@@ -21,11 +22,24 @@ public static class StatisticsCollector
 
     public static void Configure()
     {
+        ReportSendingSchedule();
         StatisticsTimeskipSchedule();
 
         MonitoringServer.PacketHandler += HandlePacket;
         AddressAnalyzer.OnBadAddress += HandleBadAddress;
         ApplicationAnalyzer.OnBadApplication += HandleBadApplication;
+    }
+
+    private async static void ReportSendingSchedule()
+    {
+        await Task.Delay(TimeSpan.FromMinutes(5));
+
+        var packets = PacketsRecieved.Where(x => x.Timestamp > DateTime.Now.AddMinutes(-5)).Select(x => x.Value).Sum();
+        var addresses = BadAddressCauses.Where(x => x.Timestamp > DateTime.Now.AddMinutes(-5)).Select(x => x.Value).Sum();
+        var apps = BadApplicationsCauses.Where(x => x.Timestamp > DateTime.Now.AddMinutes(-5)).Select(x => x.Value).Sum();
+
+        if (User.Current != null)
+            await User.Current.ReportAsync(packets, addresses, apps);
     }
 
     private async static void StatisticsTimeskipSchedule()

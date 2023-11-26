@@ -10,6 +10,6 @@ public class BadAddressEventArgs
     };
 
     public IPAddress? Address { get; set; }
-    public BadAddressReason Reason { get; set; }
+    public string Reason { get; set; }
     public string? Message { get; set; }
 }

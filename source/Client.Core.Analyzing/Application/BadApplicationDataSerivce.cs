@@ -1,19 +1,19 @@
-﻿using Client.Core.Logging;
+﻿using Client.Core.Analyzing.DataAccess.Entities;
+using Client.Core.Logging;
 
 namespace Client.Core.Analyzing.Application;
 
 internal static class BadApplicationDataSerivce
 {
     private static Logger logger = new Logger("Analyzing.Address.BadApplicationDataSerivce");
-    private static HashSet<string> badApplications  = new HashSet<string>();
     private static List<BadApplicationEventArgs> badApplicationsInfo  = new List<BadApplicationEventArgs>();
 
     public async static Task<BadApplicationEventArgs?> Find(string app)
     {
         return await Task.Run(() =>
         {
-            if (badApplications.Contains(app))
-                return badApplicationsInfo.Where(a => a.Application == app).First();
+            var apps = badApplicationsInfo.Where(a => a.Application == app);
+            if (apps.Any()) return badApplicationsInfo.Where(a => a.Application == app).First();
             else return null;
         });
     }
@@ -21,11 +21,8 @@ internal static class BadApplicationDataSerivce
     public async static void StartUpdateSchedule()
     {
         logger.Info("Collecting bad applications database from server...");
-
-        //badApplications.Add("Telegram");
-        //badApplicationsInfo.Add(new BadApplicationEventArgs("Telegram", "sniffer", "bad reputation"));
-
+        var collectedData = await BadApplication.GetBadApplications(User.Current);
+        badApplicationsInfo.AddRange(collectedData.Select(x => new BadApplicationEventArgs(x.Name, x.Reason, x.Message)));
         await Task.Delay(TimeSpan.FromMinutes(5));
     }
-
 }

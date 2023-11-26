@@ -1,5 +1,4 @@
 ﻿using Client.Core.Logging;
-using System.Buffers.Binary;
 using System.Net;
 
 namespace Client.Core.Analyzing.Address;
@@ -31,7 +30,7 @@ internal static class AddressServerDataService
         badAddressesInfo.Add(new BadAddressEventArgs()
         {
             Address = IPAddress.Parse("149.154.167.223"),
-            Reason = BadAddressReason.Spammer,
+            Reason = "spammer",
             Message = "can be ignored"
         });
 

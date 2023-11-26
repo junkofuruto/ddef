@@ -46,7 +46,7 @@ namespace Client.UI.Pages
         {
             await Dispatcher.InvokeAsync(() =>
             {
-                IssuesStackPanel.Children.Add(new IssueRepresenter(IconChar.Globe, e.Address!.ToString(), e.Reason.ToString(), e.Message));
+                IssuesStackPanel.Children.Add(new IssueRepresenter(IconChar.Globe, e.Address!.ToString(), e.Reason, e.Message));
                 if (IssuesStackPanel.Children.Count > 8) IssuesStackPanel.Children.RemoveAt(0);
             });
         }

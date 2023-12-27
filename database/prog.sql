@@ -1,4 +1,4 @@
-	ALTER PROC dbo.ddef_generate_usertoken @result VARCHAR(100) OUTPUT AS BEGIN
+CREATE PROC dbo.ddef_generate_usertoken @result VARCHAR(100) OUTPUT AS BEGIN
 	DECLARE @token VARBINARY(500);
 	DECLARE @base64token VARCHAR(100);
 	SET @token = CRYPT_GEN_RANDOM(100);
@@ -7,7 +7,7 @@
 	SET @result = LEFT(@base64token, 100)
 END;
 
-ALTER PROC dbo.ddef_register
+CREATE PROC dbo.ddef_register
 (
 	@p_f_name NVARCHAR(30),
 	@p_l_name NVARCHAR(30),
@@ -28,7 +28,7 @@ AS BEGIN
 	WHERE [id] = @inserted_id
 END;
 
-ALTER PROC dbo.ddef_login 
+CREATE PROC dbo.ddef_login 
 (
 	@p_username NVARCHAR(30),
 	@p_password NVARCHAR(30) 
@@ -42,7 +42,7 @@ AS BEGIN
 	WHERE [id] = @uid
 END;
 
-ALTER PROC dbo.ddef_drop_token
+CREATE PROC dbo.ddef_drop_token
 (
 	@user_id BIGINT,
 	@token VARCHAR(100)
@@ -59,7 +59,7 @@ AS BEGIN
 	WHERE [id] = @user_id
 END;
 
-ALTER PROC dbo.ddef_confirm_identity
+CREATE PROC dbo.ddef_confirm_identity
 (
 	@user_id BIGINT,
 	@token VARCHAR(100),
@@ -70,7 +70,7 @@ AS BEGIN
     ELSE SET @confirmed = 0;
 END;
 
-ALTER PROC dbo.ddef_report
+CREATE PROC dbo.ddef_report
 (
 	@user_id BIGINT,
 	@token VARCHAR(100),
@@ -86,7 +86,7 @@ AS BEGIN
 	SELECT 'Success' AS [message]
 END;
 
-ALTER PROC dbo.ddef_get_bad_applications
+CREATE PROC dbo.ddef_get_bad_applications
 (
 	@user_id BIGINT,
 	@token VARCHAR(100)
@@ -103,7 +103,7 @@ AS BEGIN
 	SELECT * FROM dbo.ddef_bad_application
 END;
 
-ALTER PROC dbo.ddef_get_bad_addresses
+CREATE PROC dbo.ddef_get_bad_addresses
 (
 	@user_id BIGINT,
 	@token VARCHAR(100)
@@ -120,7 +120,7 @@ AS BEGIN
 	SELECT * FROM dbo.ddef_bad_address
 END;
 
-ALTER PROC dbo.ddef_modify_user
+CREATE PROC dbo.ddef_modify_user
 (
 	@user_id BIGINT,
 	@token VARCHAR(100),
@@ -138,7 +138,7 @@ AS BEGIN
 	SELECT [username], [f_name], [l_name] FROM dbo.ddef_user WHERE [id] = @user_id
 END;
 
-ALTER PROC dbo.ddef_modify_user_plan
+CREATE PROC dbo.ddef_modify_user_plan
 (
 	@user_id BIGINT,
 	@token VARCHAR(100),
